@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect,HttpResponseRedirect
 from django.views.generic import View
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
@@ -10,12 +11,12 @@ from . import forms
 class SignUp(CreateView):
     form_class = forms.UserCreateForm
     success_url = reverse_lazy("login")
-    template_name = "LoginOut/signup.html"
+    template_name = "LogInOut/signup.html"
 
 class LoginView(View):
     def get(self,request):
         fm = forms.LoginForm()
-        return render(request,'LoginOut/login.html',{'form':fm})
+        return render(request,'LogInOut/login.html',{'form':fm})
 
     def post(self,request):
         fm = forms.LoginForm(request, data=request.POST)
@@ -31,8 +32,8 @@ class LoginView(View):
                 return HttpResponseRedirect('/')
             else:
                 # messages.error(request,'username or password not correct')
-                return redirect('LoginOut/login.html')
+                return redirect('LogInOut/login.html')
         else:
             messages.error(request,'username or password is not correct')
-            return render(request,'LoginOut/login.html',{'form':fm})
+            return render(request,'LogInOut/login.html',{'form':fm})
 

@@ -22,8 +22,9 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.HomePage.as_view(),name='home'),
-    path('quizes', include(('quizes.urls','quizes'), namespace='quizes')),
-    path('LogInOut', include(('LogInOut.urls','LogInOut'), namespace='LogInOut')),
+    path('quizes/', include('quizes.urls', namespace='quizes')),
+    path('LogInOut/', include('LogInOut.urls', namespace='LogInOut')),
+    path('LogInOut/',include('django.contrib.auth.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
